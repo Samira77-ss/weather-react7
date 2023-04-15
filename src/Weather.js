@@ -1,28 +1,60 @@
 import React from "react";
-import axios from "axios";
-import { Audio } from "react-loader-spinner";
 import "./Weather.css";
-export default function Weather(props) {
-  function handleResponse(response) {
-    alert(
-      `The weather in ${response.data.name} is ${response.data.main.temp}°C`
-    );
-  }
-  let apiKey = "094780c710fa4efd669f0df8c3991927";
-  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${props.city}&appid=${apiKey}&units=metric`;
-  axios.get(apiUrl).then(handleResponse);
+import Footer from "./Footer";
+export default function Weather() {
+  let weatherData = {
+    city: "Tokyo",
+    temperature: 17,
+    date: "Tue, Mar 28, 17:07 PM",
+    description: "Clear",
+    imgUrl: "https://ssl.gstatic.com/onebox/weather/64/sunny.png",
+    humidity: 80,
+    wind: 4,
+  };
   return (
     <div className="Weather">
-      <h1>Hello React</h1>
-      <Audio
-        height="80"
-        width="80"
-        radius="9"
-        color="green"
-        ariaLabel="loading"
-        wrapperStyle
-        wrapperClass
-      />
+      <form>
+        <div className="row">
+          <div className="col-6">
+            <input
+              type="text"
+              placeholder="  Type a city..."
+              className="city"
+              autoComplete="off"
+            />
+          </div>
+          <div className="col-3">
+            <input type="submit" value="Search" className="search" />
+          </div>
+          <div className="col-3">
+            <button className="current-button">Current</button>
+          </div>
+        </div>
+      </form>
+      <span className="citty">{weatherData.city}</span>
+      <span className="icon">
+        <img src={weatherData.imgUrl} alt="clear" width="120" />
+      </span>
+      <span className="temp">{weatherData.temperature}</span>
+      <span className="units">
+        <a href="/" className="active">
+          °C
+        </a>
+        | <a href="/">°F</a>
+      </span>
+      <h2 className="description">{weatherData.description}</h2>
+      <h1>
+        <span>{weatherData.date}</span>.
+      </h1>
+      <ul>
+        <li className="hum">
+          Humidity:<span className="humidity">{weatherData.humidity}</span>%
+        </li>
+        <li className="wnd">
+          Wind:<span className="wind">{weatherData.wind}</span>km/h
+        </li>
+      </ul>
+      <Footer />
     </div>
   );
 }
